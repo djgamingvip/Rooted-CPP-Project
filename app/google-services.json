@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "588477478003",
+    "firebase_url": "https://injector-admin-cec7d-default-rtdb.firebaseio.com",
+    "project_id": "injector-admin-cec7d",
+    "storage_bucket": "injector-admin-cec7d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588477478003:android:48cacefbfac509a3f06606",
+        "android_client_info": {
+          "package_name": "com.chat.andro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588477478003-lfonnpcuutoapu3tvnfv6buqht8ah1le.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZjU1JQjtrEPhJaxaW0c_TVcjLNBsPeTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588477478003-a48vmna8kjrn647lm34j88psnhgd5pja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588477478003:android:77f0478a59975b51f06606",
+        "android_client_info": {
+          "package_name": "com.vip.adgaming"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588477478003-lfonnpcuutoapu3tvnfv6buqht8ah1le.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZjU1JQjtrEPhJaxaW0c_TVcjLNBsPeTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588477478003-a48vmna8kjrn647lm34j88psnhgd5pja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588477478003:android:17420f1f42aafb2cf06606",
+        "android_client_info": {
+          "package_name": "com.vip.djgaming"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588477478003-lfonnpcuutoapu3tvnfv6buqht8ah1le.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZjU1JQjtrEPhJaxaW0c_TVcjLNBsPeTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588477478003-a48vmna8kjrn647lm34j88psnhgd5pja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
