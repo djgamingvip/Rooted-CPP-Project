@@ -1,12 +1,9 @@
 package com.vip.djgaming;
 
-import static android.app.ProgressDialog.show;
-
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.IBinder;
 import android.view.Gravity;
@@ -16,48 +13,24 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class FloatingActivity extends Service {
 
     private WindowManager windowManager;
     private View floatingView;
     private WindowManager.LayoutParams params;
-    private LinearLayout linear1, linear2, icon, l1, l2, l3;
-    private Switch switch1, switch2, switch3, switch4, switch5, switch6, switch7, switch8;
+    private LinearLayout linear1, linear2, l1, l2, l3, linear_close, linear_minimize;
+    private RelativeLayout icon;
+    private Switch switch1, switch2, switch3, switch4, switch5, switch6, switch7, switch8, switch9, switch10, switch11, switch12;
     private TextView textview1, textview2, textview3, textview4, textview5;
-    private ImageView imageview1, imageview3;
+    private ImageView imageview2;
 
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    private void setBg(View v, int radius, int color) {
-        GradientDrawable shape = new GradientDrawable();
-        shape.setCornerRadius(radius);
-        shape.setColor(color);
-        v.setBackground(shape);
-    }
-
-    private void setBgWithStroke(View v, int radius, int backgroundColor, int strokeWidth, int strokeColor) {
-        GradientDrawable shape = new GradientDrawable();
-        shape.setCornerRadius(radius);
-        shape.setColor(backgroundColor);
-        shape.setStroke(strokeWidth, strokeColor);
-        v.setBackground(shape);
     }
 
     @Override
@@ -94,113 +67,40 @@ public class FloatingActivity extends Service {
         setupClickListeners();
         setupTouchListeners();
 
-        setBg(linear1, 20, 0xFF000000);
-        setBg(l1, 10, 0xFF1A1A1A);
-        setBg(l2, 10, 0xFF1A1A1A);
-        setBg(l3, 10, 0xFF1A1A1A);
-        setBgWithStroke(linear2, 15, 0xFF333333, 2, 0xFF00FF00);
+        try {
+            textview1.setTypeface(Typeface.createFromAsset(getAssets(), "anonymous.ttf"), Typeface.BOLD);
+            textview2.setTypeface(Typeface.createFromAsset(getAssets(), "anonymous.ttf"), Typeface.BOLD);
+            textview3.setTypeface(Typeface.createFromAsset(getAssets(), "tajawal_medium.ttf"), Typeface.BOLD);
+            textview4.setTypeface(Typeface.createFromAsset(getAssets(), "tajawal_medium.ttf"), Typeface.NORMAL);
+            textview5.setTypeface(Typeface.createFromAsset(getAssets(), "tajawal_medium.ttf"), Typeface.NORMAL);
+        } catch (Exception e) {
+            // Fonts not found
+        }
 
-        textview1.setTypeface(Typeface.createFromAsset(getAssets(), "anonymous.ttf"), Typeface.BOLD);
-        textview2.setTypeface(Typeface.createFromAsset(getAssets(), "anonymous.ttf"), Typeface.BOLD);
+        textview3.setTextColor(0xFFFF0000);
+
+        setBg(linear_close, "#461117", 5f, 24f, 24f, 5f);
+        setBg(linear_minimize, "#373A43", 24f, 5f, 5f, 24f);
     }
 
-    //Delete Path
-    public boolean deleteRootFile(String path) {
-        try {
-            java.lang.Process su = Runtime.getRuntime().exec("su");
-            DataOutputStream os = new DataOutputStream(su.getOutputStream());
-
-            os.writeBytes("mount -o remount,rw " + path + "\n");
-            os.writeBytes("rm -f " + path + "\n");
-            os.writeBytes("mount -o remount,ro " + path + "\n");
-            os.writeBytes("exit\n");
-            os.flush();
-            su.waitFor();
-            Toast.makeText(this, "File deleted successfully", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
-
-    //Copy File From Assets To Path
-    public boolean copyAssetFileToPath(String filename, String path, String realname) {
-        try {
-            InputStream inputStream = getAssets().open(filename);
-            byte[] buffer = new byte[inputStream.available()];
-            inputStream.read(buffer);
-            inputStream.close();
-
-            File tempFile = new File(getCacheDir(), "temp_file_temp.txt");
-            FileOutputStream fos = new FileOutputStream(tempFile);
-            fos.write(buffer);
-            fos.close();
-
-            java.lang.Process su = Runtime.getRuntime().exec("su");
-            DataOutputStream outputStream = new DataOutputStream(su.getOutputStream());
-
-            outputStream.writeBytes("mount -o remount,rw " + path + "\n");
-            outputStream.writeBytes("cp " + tempFile.getAbsolutePath() + " " + path + realname + "\n");
-            outputStream.writeBytes("chmod 644 " + path + realname + "\n");
-            outputStream.writeBytes("mount -o remount,ro " + path + "\n");
-            outputStream.writeBytes("exit\n");
-            outputStream.flush();
-            su.waitFor();
-
-            Toast.makeText(FloatingActivity.this, "success", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(FloatingActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
-
-    //UnzipFromAssets
-    public boolean unzipAssetToRoot(String filename, String path) {
-        try {
-            // Copy ZIP from assets to cache
-            InputStream is = getAssets().open(filename);
-            File zipFile = new File(getCacheDir(), "temp.zip");
-
-            FileOutputStream fos = new FileOutputStream(zipFile);
-            byte[] buffer = new byte[1024];
-            int len;
-            while ((len = is.read(buffer)) > 0) {
-                fos.write(buffer, 0, len);
-            }
-            fos.close();
-            is.close();
-
-            // Root unzip
-            Process su = Runtime.getRuntime().exec("su");
-            DataOutputStream os = new DataOutputStream(su.getOutputStream());
-
-            os.writeBytes("mount -o remount,rw " + path + "\n");
-            os.writeBytes("unzip -o " + zipFile.getAbsolutePath() + " -d " + path + "\n");
-            os.writeBytes("chmod -R 755 " + path + "\n");
-            os.writeBytes("mount -o remount,ro " + path + "\n");
-            os.writeBytes("exit\n");
-            os.flush();
-
-            su.waitFor();
-
-            Toast.makeText(this, "Unzip success", Toast.LENGTH_SHORT).show();
-            return true;
-
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            return false;
-        }
+    private void setBg(View view, String hexColor, float tl, float tr, float br, float bl) {
+        android.graphics.drawable.GradientDrawable shape = new android.graphics.drawable.GradientDrawable();
+        shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+        shape.setColor(android.graphics.Color.parseColor(hexColor));
+        shape.setCornerRadii(new float[] { tl, tl, tr, tr, br, br, bl, bl });
+        view.setBackground(shape);
     }
 
     private void initializeViews() {
         linear1 = floatingView.findViewById(R.id.linear1);
         linear2 = floatingView.findViewById(R.id.linear2);
+        linear_close = floatingView.findViewById(R.id.linear_close);
+        linear_minimize = floatingView.findViewById(R.id.linear_minimize);
         icon = floatingView.findViewById(R.id.icon);
         l1 = floatingView.findViewById(R.id.l1);
         l2 = floatingView.findViewById(R.id.l2);
         l3 = floatingView.findViewById(R.id.l3);
-        imageview1 = floatingView.findViewById(R.id.imageview1);
-        imageview3 = floatingView.findViewById(R.id.imageview3);
+        imageview2 = floatingView.findViewById(R.id.imageview2);
         textview1 = floatingView.findViewById(R.id.textview1);
         textview2 = floatingView.findViewById(R.id.textview2);
         textview3 = floatingView.findViewById(R.id.textview3);
@@ -214,6 +114,10 @@ public class FloatingActivity extends Service {
         switch6 = floatingView.findViewById(R.id.switch6);
         switch7 = floatingView.findViewById(R.id.switch7);
         switch8 = floatingView.findViewById(R.id.switch8);
+        switch9 = floatingView.findViewById(R.id.switch9);
+        switch10 = floatingView.findViewById(R.id.switch10);
+        switch11 = floatingView.findViewById(R.id.switch11);
+        switch12 = floatingView.findViewById(R.id.switch12);
 
         l2.setVisibility(View.GONE);
         l3.setVisibility(View.GONE);
@@ -221,114 +125,61 @@ public class FloatingActivity extends Service {
     }
 
     private void setupClickListeners() {
-        imageview1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closeFloatingMenu();
-            }
+        imageview2.setOnClickListener(view -> closeFloatingMenu());
+        linear_close.setOnClickListener(v -> stopSelf());
+
+        icon.setOnClickListener(view -> openFloatingMenu());
+
+        textview3.setOnClickListener(view -> {
+            l1.setVisibility(View.VISIBLE);
+            l2.setVisibility(View.GONE);
+            l3.setVisibility(View.GONE);
+            updateTabs(textview3, textview4, textview5);
         });
 
-        imageview3.setOnClickListener(v -> stopSelf());
-
-        icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFloatingMenu();
-            }
+        textview4.setOnClickListener(view -> {
+            l1.setVisibility(View.GONE);
+            l2.setVisibility(View.VISIBLE);
+            l3.setVisibility(View.GONE);
+            updateTabs(textview4, textview3, textview5);
         });
 
-        TextView textview3 = floatingView.findViewById(R.id.textview3);
-        TextView textview4 = floatingView.findViewById(R.id.textview4);
-        TextView textview5 = floatingView.findViewById(R.id.textview5);
-
-        textview3.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View _view){
-                l1.setVisibility(View.VISIBLE);
-                l2.setVisibility(View.GONE);
-                l3.setVisibility(View.GONE);
-                textview3.setTypeface(Typeface.createFromAsset(getAssets(), "product.ttf"), Typeface.BOLD);
-                textview4.setTypeface(Typeface.createFromAsset(getAssets(), "product.ttf"), Typeface.NORMAL);
-                textview5.setTypeface(Typeface.createFromAsset(getAssets(), "product.ttf"), Typeface.NORMAL);
-                textview3.setTextColor(0xFF00FF00);
-                textview4.setTextColor(0xFF9E9E9E);
-                textview5.setTextColor(0xFF9E9E9E);
-            }
+        textview5.setOnClickListener(view -> {
+            l1.setVisibility(View.GONE);
+            l2.setVisibility(View.GONE);
+            l3.setVisibility(View.VISIBLE);
+            updateTabs(textview5, textview3, textview4);
         });
 
-        textview4.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View _view){
-                l1.setVisibility(View.GONE);
-                l2.setVisibility(View.VISIBLE);
-                l3.setVisibility(View.GONE);
-                textview3.setTypeface(Typeface.createFromAsset(getAssets(), "product.ttf"), Typeface.NORMAL);
-                textview4.setTypeface(Typeface.createFromAsset(getAssets(), "product.ttf"), Typeface.BOLD);
-                textview5.setTypeface(Typeface.createFromAsset(getAssets(), "product.ttf"), Typeface.NORMAL);
-                textview3.setTextColor(0xFF9E9E9E);
-                textview4.setTextColor(0xFF00FF00);
-                textview5.setTextColor(0xFF9E9E9E);
-            }
-        });
+        setupSwitchListeners();
+    }
 
-        textview5.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View _view){
-                l1.setVisibility(View.GONE);
-                l2.setVisibility(View.GONE);
-                l3.setVisibility(View.VISIBLE);
-                textview3.setTypeface(Typeface.createFromAsset(getAssets(), "product.ttf"), Typeface.NORMAL);
-                textview4.setTypeface(Typeface.createFromAsset(getAssets(), "product.ttf"), Typeface.NORMAL);
-                textview5.setTypeface(Typeface.createFromAsset(getAssets(), "product.ttf"), Typeface.BOLD);
-                textview3.setTextColor(0xFF9E9E9E);
-                textview4.setTextColor(0xFF9E9E9E);
-                textview5.setTextColor(0xFF00FF00);
-            }
-        });
+    private void updateTabs(TextView active, TextView inactive1, TextView inactive2) {
+        try {
+            active.setTypeface(Typeface.createFromAsset(getAssets(), "tajawal_medium.ttf"), Typeface.BOLD);
+            active.setTextColor(0xFFFF0000);
+            inactive1.setTypeface(Typeface.createFromAsset(getAssets(), "tajawal_medium.ttf"), Typeface.NORMAL);
+            inactive1.setTextColor(0xFF9E9E9E);
+            inactive2.setTypeface(Typeface.createFromAsset(getAssets(), "tajawal_medium.ttf"), Typeface.NORMAL);
+            inactive2.setTextColor(0xFF9E9E9E);
+        } catch (Exception e) {
+            // Font not found
+        }
+    }
 
-        switch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if(copyAssetFileToPath("abcd.txt","/data/user/0/com.dts.freefiremax/files/contentcache/Compulsory/android/gameassetbundles/","djgamingvip")) {
-                    return;
-                } else {
-                    return;
-                }
-            } else {
-                Toast.makeText(FloatingActivity.this, "OFF", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        switch2.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if(deleteRootFile("/data/user/0/com.dts.freefiremax/files/contentcache/Compulsory/android/gameassetbundles/djgamingvip")) {
-                    return;
-                } else {
-                    return;
-                }
-            } else {
-                Toast.makeText(FloatingActivity.this, "OFF", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        switch3.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if(unzipAssetToRoot("file.zip","data/user/0/com.dts.freefiremax/files/contentcache/Compulsory/android/gameassetbundles/")) {
-                    return;
-                } else {
-                    return;
-                }
-            } else {
-                Toast.makeText(FloatingActivity.this, "OFF", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        switch4.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                //djgamingvip-On Statement
-            } else {
-                //djgamingvip-Off Statement
-            }
-        });
+    private void setupSwitchListeners() {
+        switch1.setOnCheckedChangeListener((buttonView, isChecked) -> {});
+        switch2.setOnCheckedChangeListener((buttonView, isChecked) -> {});
+        switch3.setOnCheckedChangeListener((buttonView, isChecked) -> {});
+        switch4.setOnCheckedChangeListener((buttonView, isChecked) -> {});
+        switch5.setOnCheckedChangeListener((buttonView, isChecked) -> {});
+        switch6.setOnCheckedChangeListener((buttonView, isChecked) -> {});
+        switch7.setOnCheckedChangeListener((buttonView, isChecked) -> {});
+        switch8.setOnCheckedChangeListener((buttonView, isChecked) -> {});
+        switch9.setOnCheckedChangeListener((buttonView, isChecked) -> {});
+        switch10.setOnCheckedChangeListener((buttonView, isChecked) -> {});
+        switch11.setOnCheckedChangeListener((buttonView, isChecked) -> {});
+        switch12.setOnCheckedChangeListener((buttonView, isChecked) -> {});
     }
 
     private void setupTouchListeners() {
@@ -337,6 +188,7 @@ public class FloatingActivity extends Service {
             private float initialTouchX, initialTouchY;
             private boolean isDragging = false;
             private final int TOUCH_SLOP = 10;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -347,11 +199,9 @@ public class FloatingActivity extends Service {
                         initialTouchY = event.getRawY();
                         isDragging = false;
                         return true;
-
                     case MotionEvent.ACTION_MOVE:
                         float deltaX = Math.abs(event.getRawX() - initialTouchX);
                         float deltaY = Math.abs(event.getRawY() - initialTouchY);
-
                         if (deltaX > TOUCH_SLOP || deltaY > TOUCH_SLOP) {
                             isDragging = true;
                             params.x = initialX + (int) (event.getRawX() - initialTouchX);
@@ -359,7 +209,6 @@ public class FloatingActivity extends Service {
                             windowManager.updateViewLayout(floatingView, params);
                         }
                         return true;
-
                     case MotionEvent.ACTION_UP:
                         if (!isDragging) {
                             openFloatingMenu();
@@ -386,11 +235,9 @@ public class FloatingActivity extends Service {
                         initialTouchY = event.getRawY();
                         isDragging = false;
                         return true;
-
                     case MotionEvent.ACTION_MOVE:
                         float deltaX = Math.abs(event.getRawX() - initialTouchX);
                         float deltaY = Math.abs(event.getRawY() - initialTouchY);
-
                         if (deltaX > TOUCH_SLOP || deltaY > TOUCH_SLOP) {
                             isDragging = true;
                             params.x = initialX + (int) (event.getRawX() - initialTouchX);
@@ -398,7 +245,6 @@ public class FloatingActivity extends Service {
                             windowManager.updateViewLayout(floatingView, params);
                         }
                         return true;
-
                     case MotionEvent.ACTION_UP:
                         return isDragging;
                 }
@@ -410,7 +256,6 @@ public class FloatingActivity extends Service {
     private void openFloatingMenu() {
         linear1.setVisibility(View.VISIBLE);
         icon.setVisibility(View.GONE);
-
         updateWindowFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
                 WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
     }
@@ -418,7 +263,6 @@ public class FloatingActivity extends Service {
     private void closeFloatingMenu() {
         linear1.setVisibility(View.GONE);
         icon.setVisibility(View.VISIBLE);
-
         updateWindowFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
                 WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
@@ -437,7 +281,11 @@ public class FloatingActivity extends Service {
     public void onDestroy() {
         super.onDestroy();
         if (floatingView != null) {
-            windowManager.removeView(floatingView);
+            try {
+                windowManager.removeView(floatingView);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

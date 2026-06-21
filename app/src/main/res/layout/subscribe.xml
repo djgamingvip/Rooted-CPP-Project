@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linear1"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:id="@+id/linear4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/subscribe_card_bg"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:elevation="12dp">
+
+        <!-- YouTube Header -->
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/btn_gradient_youtube"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/imageview1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_youtube_white"
+                    android:scaleType="fitCenter" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linear3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="16dp">
+
+                <TextView
+                    android:id="@+id/textview1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DJ GAMING VIP"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textview2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Official YouTube"
+                    android:textColor="#AAAAAA"
+                    android:textSize="12sp" />
+
+                <RatingBar
+                    android:id="@+id/ratingbar1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:numStars="5"
+                    android:rating="5.0"
+                    android:stepSize="0.5"
+                    android:isIndicator="true"
+                    android:progressTint="#FFEB3B" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textview3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="🎯 Premium Benefits"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#FF3B3B" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:id="@+id/textview4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• Exclusive Mod Content"
+                android:textSize="12sp"
+                android:textColor="#CCCCCC"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/textview5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• Early Access to Updates"
+                android:textSize="12sp"
+                android:textColor="#CCCCCC"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/textview6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• Direct Admin Support"
+                android:textSize="12sp"
+                android:textColor="#CCCCCC" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSubscribe"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="SUBSCRIBE"
+            android:backgroundTint="#FF0000"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:elevation="4dp"
+            android:layout_marginBottom="12dp"
+            android:stateListAnimator="@null"
+            android:drawableLeft="@drawable/ic_youtube_white"
+            android:paddingLeft="20dp"
+            android:drawablePadding="-20dp" />
+
+        <Button
+            android:id="@+id/btnLater"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Maybe Later"
+            android:textColor="#555555"
+            android:textSize="13sp"
+            android:background="@drawable/btn_outline_dark"
+            app:backgroundTint="@null"
+            android:textAllCaps="false"
+            style="@style/Widget.AppCompat.Button.Borderless" />
+
+        <TextView
+            android:id="@+id/textview9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="🔔 Turn on notifications for full access!"
+            android:textSize="10sp"
+            android:textColor="#FF9800"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+</LinearLayout>

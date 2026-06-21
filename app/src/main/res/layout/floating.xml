@@ -2,346 +2,368 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
-    <LinearLayout
+
+    <!-- Collapsed State (Icon) -->
+    <RelativeLayout
         android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_margin="5dp">
+
         <ImageView
-            android:id="@+id/imageview2"
-            android:focusable="false"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
+            android:id="@+id/imageview1"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerInParent="true"
             android:src="@drawable/djgamingvip"
-            android:scaleType="fitXY" />
-        <ImageView
-            android:id="@+id/imageview3"
-            android:focusable="false"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginBottom="25dp"
-            android:src="@drawable/close1"
             android:scaleType="fitCenter"
-            android:translationX="-5.0dp" />
-    </LinearLayout>
+            android:elevation="5dp" />
+
+    </RelativeLayout>
+
+    <!-- Expanded State (Main Panel) -->
     <LinearLayout
         android:id="@+id/linear1"
-        android:layout_width="200dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:src="@drawable/edittext_bg"
-        android:background="#070707"
-        android:orientation="vertical">
+        android:background="@drawable/floating_bg"
+        android:orientation="vertical"
+        android:padding="2dp"
+        android:elevation="8dp">
+
+        <!-- Header -->
         <LinearLayout
             android:id="@+id/linear2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/textview1"
-                android:focusable="false"
-                android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="5dp"
+            android:layout_margin="2dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:text="DJ GAMING VIP"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF" />
-            <TextView
-                android:id="@+id/textview2"
-                android:focusable="false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingTop="4dp"
-                android:paddingRight="8dp"
-                android:paddingBottom="4dp"
-                android:text="PANEL"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="#00FF00"
-                android:layout_weight="1" />
-            <ImageView
-                android:id="@+id/imageview1"
-                android:focusable="false"
-                android:layout_width="19dp"
-                android:layout_height="19dp"
-                android:src="@drawable/close1"
-                android:scaleType="fitCenter" />
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textview1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DJ GAMING"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:id="@+id/textview2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="VIP"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#FF3B3B" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_minimize"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:layout_marginRight="3dp">
+
+                <ImageView
+                    android:id="@+id/imageview2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_remove_white"
+                    app:tint="#88FFFFFF"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_close"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp">
+
+                <ImageView
+                    android:id="@+id/imageview3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/close1"
+                    app:tint="#88FFFFFF"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
         </LinearLayout>
+
+        <!-- Tabs / Categories -->
         <LinearLayout
             android:id="@+id/linear3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal|center_vertical"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingVertical="6dp"
+            android:layout_marginTop="2dp">
+
             <TextView
                 android:id="@+id/textview3"
-                android:focusable="false"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Aimbot"
-                android:textSize="12sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="AIMBOT"
+                android:textSize="10sp"
                 android:textStyle="bold"
-                android:textColor="#00FF00" />
+                android:textColor="#FF0000" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:background="#33FFFFFF" />
+
             <TextView
                 android:id="@+id/textview4"
-                android:focusable="false"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="8dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="8dp"
-                android:text="Location"
-                android:textSize="12sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="VISUAL"
+                android:textSize="10sp"
                 android:textColor="#9E9E9E" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:background="#33FFFFFF" />
+
             <TextView
                 android:id="@+id/textview5"
-                android:focusable="false"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Settings"
-                android:textSize="12sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="SYSTEM"
+                android:textSize="10sp"
                 android:textColor="#9E9E9E" />
         </LinearLayout>
+
+        <!-- Content Area -->
         <ScrollView
             android:id="@+id/vscroll1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
             <LinearLayout
                 android:id="@+id/linear4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <!-- Aimbot Group -->
                 <LinearLayout
                     android:id="@+id/l1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingRight="3dp"
-                    android:paddingLeft="3dp"
-                    android:layout_marginBottom="8dp"
                     android:orientation="vertical">
+
                     <Switch
                         android:id="@+id/switch1"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
                         android:text="Aimbot 95%"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                     <Switch
                         android:id="@+id/switch2"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
-                        android:text="Aim Scope"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
+                        android:text="Fly Up"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                     <Switch
                         android:id="@+id/switch3"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
-                        android:text="Aim Lock"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
+                        android:text="Fly Map"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                     <Switch
                         android:id="@+id/switch4"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
-                        android:text="Aim Tiro"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
+                        android:text="Football Hack"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                 </LinearLayout>
+
+                <!-- Visual Group -->
                 <LinearLayout
                     android:id="@+id/l2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingRight="3dp"
-                    android:paddingLeft="3dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
                     <Switch
                         android:id="@+id/switch5"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
                         android:text="Esp Crosshair"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                     <Switch
                         android:id="@+id/switch6"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
                         android:text="Esp Granada"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                     <Switch
                         android:id="@+id/switch7"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
                         android:text="Esp Name"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                     <Switch
                         android:id="@+id/switch8"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
                         android:text="Esp Lazer"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                 </LinearLayout>
+
+                <!-- System Group -->
                 <LinearLayout
                     android:id="@+id/l3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingRight="3dp"
-                    android:paddingLeft="3dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
                     <Switch
                         android:id="@+id/switch9"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
                         android:text="Anti Cheat"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                     <Switch
                         android:id="@+id/switch10"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
                         android:text="Anti Report"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                     <Switch
                         android:id="@+id/switch11"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
                         android:text="Anti Bypass"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                     <Switch
                         android:id="@+id/switch12"
-                        android:focusable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="3dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="left|center_vertical"
                         android:text="Anti Record"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
                         android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:background="@drawable/floating_item_bg"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:layout_marginBottom="8dp"
                         android:thumb="@drawable/thumb"
                         android:track="@drawable/track" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+
+        <!-- Footer -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="SECURED BY DJ GAMING"
+            android:textColor="#33FFFFFF"
+            android:textSize="8sp"
+            android:letterSpacing="0.1" />
     </LinearLayout>
 </LinearLayout>
